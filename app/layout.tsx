@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     title: "Aakaash Charles | Software Engineer",
     description:
       "Full-Stack & Software Systems Engineer building scalable systems.",
-    images: ["/thumbnail.png"],
+    images: ["/image.png"],
   },
 };
 
