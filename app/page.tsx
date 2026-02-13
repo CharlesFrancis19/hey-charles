@@ -149,12 +149,19 @@ export default function Page() {
           <div className="hidden md:flex absolute inset-0 flex items-center justify-center">
             <ShuffleCardBox cards={cardsData} />
           </div>
-          
+
 
           {/* 🎵 Music Control Button */}
           <button
             onClick={toggleMusic}
-            className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 hover:bg-white/20 transition"
+            className="
+    fixed bottom-5 right-5 z-[999]
+    bg-white/10 backdrop-blur-md 
+    text-white px-4 py-2 
+    rounded-xl border border-white/20 
+    hover:bg-white/20 transition
+    md:absolute md:bottom-6 md:right-6
+  "
           >
             {isPlaying ? "⏸ Pause Lofi" : "🎧 Play Lofi"}
           </button>
