@@ -1,16 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Loader from "./components/Loader";
-import StickerBoard from "./components/StickerBoard";
-import ShuffleCardBox from "./components/ShuffleCardBox";
-import { stickersData } from "./components/stickersData";
-import StickerBoardMobile from "./components/StickerBoardMobile";
-import ShuffleCardBoxMobile from "./components/ShuffleCardBoxMobile";
+import { useState } from "react";
+import ShuffleCardBoxMobile from "./ShuffleCardBoxMobile";
 
-const LOFI_STREAM = "https://stream.zeno.fm/0r0xa792kwzuv";
+export type StickerItem = {
+  id: string;
+  image: string;
+  description?: string;
+  link?: string;
+};
 
-const cardsData = [
+export default function StickerBoardMobile({
+  items,
+}: {
+  items: StickerItem[];
+}) {
+  const [popup, setPopup] = useState<string | null>(null);
+
+  const cardsData = [
   {
     id: "1",
     title: "Yo, I'm Aakaash.",
@@ -94,71 +101,82 @@ const cardsData = [
       "Actively refining production-level applications, improving UI/UX standards, strengthening backend scalability.",
   },
 ];
-
-export default function Page() {
-  const [loaded, setLoaded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  // Try autoplay when loader completes
-  useEffect(() => {
-    if (loaded && audioRef.current) {
-      audioRef.current.volume = 0.4;
-
-      audioRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => console.log("Autoplay blocked by browser"));
-    }
-  }, [loaded]);
-
-  const toggleMusic = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
+  const filteredItems = items.slice(1);
 
   return (
-    <div className="relative w-screen md:h-screen min-h-screen bg-black md:overflow-hidden overflow-y-auto">
+    <div className="w-full min-h-screen bg-black text-white overflow-y-auto">
 
+      {/* ===== TOP SECTION ===== */}
+      <section className="relative pt-16 pb-12 px-4 flex justify-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-blue-500/20 blur-3xl rounded-full -z-10" />
+        <ShuffleCardBoxMobile cards={cardsData} />
+      </section>
 
-      {/* 🎧 Audio Player */}
-      <audio ref={audioRef} src={LOFI_STREAM} loop />
+      {/* Divider */}
+      <div className="w-full h-[1px] bg-white/10 mb-10" />
 
-      {!loaded && <Loader onComplete={() => setLoaded(true)} />}
+      {/* ===== STICKERS ===== */}
+      <section className="px-6 pb-24">
+        <h3 className="text-sm uppercase tracking-widest text-white/50 mb-6">
+          Explore More
+        </h3>
 
-      {loaded && (
-        <>
-          {/* Grid Background */}
-          <div className="absolute inset-0 bg-[linear-gradient(#1f1f1f_1px,transparent_1px),linear-gradient(to_right,#1f1f1f_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="grid grid-cols-2 gap-5">
+          {filteredItems.map((item) => (
+            <div
+              key={item.id}
+              onClick={() => {
+                if (item.link) {
+                  window.open(item.link, "_blank");
+                } else if (item.description) {
+                  setPopup(item.description);
+                }
+              }}
+              className="
+                bg-white/5
+                backdrop-blur-xl
+                border border-white/10
+                rounded-2xl
+                p-5
+                flex items-center justify-center
+                transition-all duration-300
+                active:scale-95
+                hover:bg-white/10
+                shadow-[0_10px_30px_rgba(0,0,0,0.5)]
+              "
+            >
+              <img
+                src={item.image}
+                className="w-20 object-contain transition-transform duration-300 hover:scale-110"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
 
-          {/* Stickers */}
-          <div className="hidden md:block absolute inset-0">
-            <StickerBoard items={stickersData} />
-          </div>
-          <div className="md:hidden absolute inset-0">
-            <StickerBoardMobile items={stickersData} />
-          </div>
-          {/* Cards */}
-          <div className="hidden md:flex absolute inset-0 flex items-center justify-center">
-            <ShuffleCardBox cards={cardsData} />
-          </div>
-          
-
-          {/* 🎵 Music Control Button */}
-          <button
-            onClick={toggleMusic}
-            className="absolute bottom-6 right-6 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 hover:bg-white/20 transition"
+      {/* ===== POPUP ===== */}
+      {popup && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-[9999] px-6"
+          onClick={() => setPopup(null)}
+        >
+          <div
+            className="
+              bg-white text-black
+              rounded-2xl
+              p-6
+              max-w-sm
+              text-sm
+              shadow-2xl
+              transition-all duration-200
+              scale-100
+            "
+            onClick={(e) => e.stopPropagation()}
           >
-            {isPlaying ? "⏸ Pause Lofi" : "🎧 Play Lofi"}
-          </button>
-        </>
+            {popup}
+          </div>
+        </div>
       )}
     </div>
   );
