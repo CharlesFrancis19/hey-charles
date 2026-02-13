@@ -8,9 +8,10 @@ export const stickersData: StickerItem[] = [
   id: "github",
   image: "/stickers/github.png",
   size: 130,
+  rotate: -18,
   mobileSize: 80,
-  x: 100,
-  y: 117,
+  x: 16,
+  y: 6,
   link: "https://github.com/CharlesFrancis19",
 },
 {
@@ -18,8 +19,9 @@ export const stickersData: StickerItem[] = [
   image: "/stickers/github.png",
   size: 130,
   mobileSize: 80,
-  x: 100,
-  y: 117,
+   rotate: -18,
+  x: 16,
+  y: 6,
   link: "https://github.com/CharlesFrancis19",
 },
 
@@ -28,8 +30,8 @@ export const stickersData: StickerItem[] = [
     image: "/stickers/linkedin.png",
     size: 130,
     mobileSize: 80,
-    x: 1085,
-    y: 563,
+    x: 72,
+    y: 10,
     link: "https://www.linkedin.com/in/aakaash-charles-6b8678247/",
     description:
       "LinkedIn — Documenting my growth journey as a fresher aiming to become a high-impact backend engineer.",
@@ -43,8 +45,8 @@ export const stickersData: StickerItem[] = [
     rotate: -6,
     size: 200,
     mobileSize: 120,
-    x: 407,
-    y: 49,
+    x: 25,
+    y: 10,
     description:
       "Hi 👋 I'm Aakaash Charles — Master’s student in IT in New Zealand. I build scalable backend systems, secure APIs, and real-time applications. I focus on performance, architecture, and production-ready solutions.",
   },
@@ -55,8 +57,9 @@ export const stickersData: StickerItem[] = [
     rotate: 6,
     size: 170,
     mobileSize: 100,
-    x: 1309,
-    y: 403,
+   
+     x: 73,
+    y: 57,
     description:
       "Mentoring — I genuinely enjoy guiding students in tech. Teaching reinforces my fundamentals and builds leadership, empathy, and communication skills.",
   },
@@ -67,8 +70,8 @@ export const stickersData: StickerItem[] = [
     rotate: -4,
     size: 160,
     mobileSize: 100,
-    x: 37,
-    y: 427,
+    x: 3,
+    y: 75,
     description:
       "Web Development — Strong in Node.js, React, Next.js, REST APIs, authentication systems, and scalable database design (MongoDB/MySQL).",
   },
@@ -81,8 +84,8 @@ export const stickersData: StickerItem[] = [
     rotate: 4,
     size: 160,
     mobileSize: 100,
-    x: 680,
-    y: 90,
+    x: 45,
+    y: 13,
     description:
       "Exaba Internship — Built a secure Flutter mobile photo backup app integrated with S3-compatible object storage. Implemented IAM-based authentication, per-user bucket provisioning, secure token handling, and media sync optimization.",
   },
@@ -93,8 +96,8 @@ export const stickersData: StickerItem[] = [
     rotate: -5,
     size: 160,
     mobileSize: 100,
-    x: 1221,
-    y: 47,
+    x: 70,
+    y: 42,
     description:
       "Cyfotok — Worked on backend architecture, API design, database structuring, and performance improvements for scalable applications.",
   },
@@ -105,37 +108,15 @@ export const stickersData: StickerItem[] = [
     rotate: -7,
     size: 160,
     mobileSize: 100,
-    x: 317,
-    y: 582,
+    x: 22,
+    y: 83,
     description:
       "Vakilsearch — Gained real-world product exposure, understanding business requirements, production environments, and collaborative development workflows.",
   },
 
   /* ================= PROJECTS ================= */
 
-  {
-    id: "cloudvault",
-    image: "/stickers/cloudvault.png",
-    rotate: 3,
-    size: 160,
-    mobileSize: 100,
-    x: 720,
-    y: 420,
-    description:
-      "CloudVault — A Next.js file storage dashboard with analytics, drag-and-drop uploads, file listing management, and modern UI architecture using Tailwind CSS.",
-  },
-
-  {
-    id: "taniwha",
-    image: "/stickers/taniwha.png",
-    rotate: -3,
-    size: 160,
-    mobileSize: 100,
-    x: 950,
-    y: 350,
-    description:
-      "Taniwha Trails — Interactive storytelling platform preserving Māori lake legends. Built for education with role-based access (public & restricted cultural knowledge sections).",
-  },
+ 
 
  
   /* ================= PERSONAL ================= */
@@ -146,8 +127,8 @@ export const stickersData: StickerItem[] = [
     rotate: -7,
     size: 180,
     mobileSize: 100,
-    x: 203,
-    y: 236,
+    x: 10,
+    y: 39,
     description:
       "Family — My strongest foundation. They sacrificed so I could study abroad. Every achievement I earn is built on their support, belief, and unconditional love.",
   },
@@ -158,8 +139,8 @@ export const stickersData: StickerItem[] = [
     rotate: -5,
     size: 180,
     mobileSize: 100,
-    x: 843,
-    y: 550,
+    x: 58,
+    y: 78,
     description:
       "Friends — My emotional balance during my Master's journey abroad. They keep me grounded, motivated, and remind me that success means nothing without shared memories.",
   },
@@ -170,8 +151,8 @@ export const stickersData: StickerItem[] = [
     rotate: -3,
     size: 150,
     mobileSize: 90,
-    x: 1044,
-    y: 244,
+    x: 85,
+    y: 10,
     description:
       "New Zealand Life 🇳🇿 — Moved abroad independently to pursue my Master’s. Learned resilience, self-discipline, financial management, cooking, networking, and professional growth. Currently on Post-Study Work Visa (PSW), actively building my career in NZ tech.",
   },
@@ -181,11 +162,11 @@ export const stickersData: StickerItem[] = [
   {
     id: "waikato",
     image: "/stickers/waikato.jpg",
-    rotate: 2,
+    rotate: 12,
     size: 150,
     mobileSize: 90,
-    x: 605,
-    y: 582,
+    x: 40,
+    y: 80,
     description:
       "University of Waikato — Master of Information Technology. Studied advanced software engineering, cloud systems, distributed systems, database design, and secure application development.",
   },
@@ -196,8 +177,8 @@ export const stickersData: StickerItem[] = [
     rotate: -4,
     size: 150,
     mobileSize: 90,
-    x: 263,
-    y: 47,
+    x: 85,
+    y: 58,
     description:
       "Sri Shakthi Institute — Completed my undergraduate engineering degree, building strong foundations in programming, data structures, and system fundamentals.",
   },
@@ -209,8 +190,8 @@ export const stickersData: StickerItem[] = [
     image: "/stickers/crocodile.png",
     rotate: 6,
     size: 150,
-    x:1240,
-    y: 200,
+    x:30,
+    y: 60,
     mobileSize: 90,
     description:
       "Not just code — I love energy, creativity, music, gym discipline, and building things that make people say 'wow'.",
@@ -222,8 +203,8 @@ export const stickersData: StickerItem[] = [
     rotate: -2,
     size: 120,
     mobileSize: 80,
-    x: 990,
-    y: 50,
+    x: 4,
+    y: 17,
      link: "https://mail.google.com/mail/?view=cm&fs=1&to=aakaashcharleswork@gmail.com",
     description:
       "Let’s connect — Open to full-time backend / full-stack roles in New Zealand tech. Always ready for meaningful conversations.",

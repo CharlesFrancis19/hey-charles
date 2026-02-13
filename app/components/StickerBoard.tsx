@@ -6,8 +6,8 @@ import { DndContext, useDraggable, DragEndEvent } from "@dnd-kit/core";
 export type StickerItem = {
   id: string;
   image: string;
-  x?: number;
-  y?: number;
+  x?: number; // percentage (0–100)
+  y?: number; // percentage (0–100)
   size?: number;
   mobileSize?: number;
   rotate?: number;
@@ -38,7 +38,6 @@ export default function StickerBoard({
   const [popup, setPopup] = useState<PopupData | null>(null);
   const [screen, setScreen] = useState({ width: 0, height: 0 });
   const [zCounter, setZCounter] = useState(100);
-
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   /* ============================= */
@@ -77,15 +76,15 @@ export default function StickerBoard({
   }, [popup]);
 
   /* ============================= */
-  /* INITIAL POSITION */
+  /* INITIAL POSITION (PERCENT BASED) */
   /* ============================= */
   useEffect(() => {
     if (!screen.width) return;
 
     const positioned: PositionedSticker[] = items.map((item, index) => ({
       ...item,
-      x: item.x ?? 100 + index * 40,
-      y: item.y ?? 100 + index * 40,
+      x: ((item.x ?? 50) / 100) * screen.width,
+      y: ((item.y ?? 50) / 100) * screen.height,
       rotate: item.rotate ?? 0,
       z: index,
     }));
@@ -113,7 +112,7 @@ export default function StickerBoard({
   };
 
   /* ============================= */
-  /* DRAGGABLE COMPONENT */
+  /* DRAGGABLE */
   /* ============================= */
   function Draggable({ sticker }: { sticker: PositionedSticker }) {
     const ref = useRef<HTMLDivElement | null>(null);
@@ -143,7 +142,6 @@ export default function StickerBoard({
             )
           );
 
-          /* 🔗 HANDLE LINK */
           if (sticker.link) {
             if (isMobile) {
               window.location.href = sticker.link;
@@ -153,7 +151,6 @@ export default function StickerBoard({
             return;
           }
 
-          /* 💬 HANDLE POPUP */
           if (sticker.description && ref.current) {
             const rect = ref.current.getBoundingClientRect();
             const popupWidth = 260;
@@ -209,14 +206,13 @@ export default function StickerBoard({
   /* ============================= */
 
   return (
-    <>
+    <div className="relative w-full h-full max-w-[1600px] mx-auto">
       <DndContext onDragEnd={handleDragEnd}>
         {stickers.map((sticker) => (
           <Draggable key={sticker.id} sticker={sticker} />
         ))}
       </DndContext>
 
-      {/* POPUP */}
       {popup && (
         <div
           className="fixed z-[9999] animate-popupScale"
@@ -228,7 +224,6 @@ export default function StickerBoard({
           >
             {popup.text}
 
-            {/* Arrow */}
             <div
               className={`absolute w-4 h-4 bg-white rotate-45 border-gray-200
                 ${
@@ -242,6 +237,6 @@ export default function StickerBoard({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
