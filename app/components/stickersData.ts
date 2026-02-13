@@ -96,7 +96,7 @@ export const stickersData: StickerItem[] = [
     rotate: -5,
     size: 160,
     mobileSize: 100,
-    x: 70,
+    x: 74,
     y: 42,
     description:
       "Cyfotok — Worked on backend architecture, API design, database structuring, and performance improvements for scalable applications.",
@@ -151,8 +151,8 @@ export const stickersData: StickerItem[] = [
     rotate: -3,
     size: 150,
     mobileSize: 90,
-    x: 85,
-    y: 10,
+    x: 90,
+    y: 22,
     description:
       "New Zealand Life 🇳🇿 — Moved abroad independently to pursue my Master’s. Learned resilience, self-discipline, financial management, cooking, networking, and professional growth. Currently on Post-Study Work Visa (PSW), actively building my career in NZ tech.",
   },
@@ -166,7 +166,7 @@ export const stickersData: StickerItem[] = [
     size: 150,
     mobileSize: 90,
     x: 40,
-    y: 80,
+    y: 85,
     description:
       "University of Waikato — Master of Information Technology. Studied advanced software engineering, cloud systems, distributed systems, database design, and secure application development.",
   },
@@ -177,8 +177,8 @@ export const stickersData: StickerItem[] = [
     rotate: -4,
     size: 150,
     mobileSize: 90,
-    x: 85,
-    y: 58,
+    x: 95,
+    y: 68,
     description:
       "Sri Shakthi Institute — Completed my undergraduate engineering degree, building strong foundations in programming, data structures, and system fundamentals.",
   },

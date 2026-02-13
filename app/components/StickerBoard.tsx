@@ -6,8 +6,8 @@ import { DndContext, useDraggable, DragEndEvent } from "@dnd-kit/core";
 export type StickerItem = {
   id: string;
   image: string;
-  x?: number; // percentage (0–100)
-  y?: number; // percentage (0–100)
+  x?: number; // percentage 0-100
+  y?: number; // percentage 0-100
   size?: number;
   mobileSize?: number;
   rotate?: number;
@@ -29,20 +29,17 @@ type PopupData = {
   arrowTop: number;
 };
 
-export default function StickerBoard({
-  items,
-}: {
-  items: StickerItem[];
-}) {
+const CANVAS_WIDTH = 1400;
+const CANVAS_HEIGHT = 850;
+
+export default function StickerBoard({ items }: { items: StickerItem[] }) {
   const [stickers, setStickers] = useState<PositionedSticker[]>([]);
   const [popup, setPopup] = useState<PopupData | null>(null);
   const [screen, setScreen] = useState({ width: 0, height: 0 });
   const [zCounter, setZCounter] = useState(100);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
-  /* ============================= */
   /* SCREEN SIZE */
-  /* ============================= */
   useEffect(() => {
     const update = () =>
       setScreen({
@@ -55,9 +52,7 @@ export default function StickerBoard({
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  /* ============================= */
-  /* CLOSE POPUP ON OUTSIDE CLICK */
-  /* ============================= */
+  /* CLOSE POPUP */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -70,31 +65,47 @@ export default function StickerBoard({
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
+    return () =>
       document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, [popup]);
 
-  /* ============================= */
-  /* INITIAL POSITION (PERCENT BASED) */
-  /* ============================= */
+  /* PERFECT CENTERED CANVAS POSITIONING */
   useEffect(() => {
     if (!screen.width) return;
 
-    const positioned: PositionedSticker[] = items.map((item, index) => ({
-      ...item,
-      x: ((item.x ?? 50) / 100) * screen.width,
-      y: ((item.y ?? 50) / 100) * screen.height,
-      rotate: item.rotate ?? 0,
-      z: index,
-    }));
+    const scale = Math.min(
+      screen.width / CANVAS_WIDTH,
+      screen.height / CANVAS_HEIGHT
+    );
+
+    const canvasWidth = CANVAS_WIDTH * scale;
+    const canvasHeight = CANVAS_HEIGHT * scale;
+
+    const offsetX = (screen.width - canvasWidth) / 2;
+    const offsetY = (screen.height - canvasHeight) / 2;
+
+    const positioned: PositionedSticker[] = items.map((item, index) => {
+      const pxX =
+        offsetX +
+        ((item.x ?? 50) / 100) * canvasWidth;
+
+      const pxY =
+        offsetY +
+        ((item.y ?? 50) / 100) * canvasHeight;
+
+      return {
+        ...item,
+        x: pxX,
+        y: pxY,
+        rotate: item.rotate ?? 0,
+        z: index,
+      };
+    });
 
     setStickers(positioned);
   }, [items, screen]);
 
-  /* ============================= */
   /* DRAG END */
-  /* ============================= */
   const handleDragEnd = (event: DragEndEvent) => {
     const { delta, active } = event;
 
@@ -111,9 +122,6 @@ export default function StickerBoard({
     );
   };
 
-  /* ============================= */
-  /* DRAGGABLE */
-  /* ============================= */
   function Draggable({ sticker }: { sticker: PositionedSticker }) {
     const ref = useRef<HTMLDivElement | null>(null);
 
@@ -143,11 +151,7 @@ export default function StickerBoard({
           );
 
           if (sticker.link) {
-            if (isMobile) {
-              window.location.href = sticker.link;
-            } else {
-              window.open(sticker.link, "_blank", "noopener,noreferrer");
-            }
+            window.open(sticker.link, "_blank");
             return;
           }
 
@@ -155,12 +159,16 @@ export default function StickerBoard({
             const rect = ref.current.getBoundingClientRect();
             const popupWidth = 260;
 
-            const stickerCenterY = rect.top + rect.height / 2;
+            const stickerCenterY =
+              rect.top + rect.height / 2;
 
             let posX;
             let side: "left" | "right";
 
-            if (rect.right + popupWidth + 20 < window.innerWidth) {
+            if (
+              rect.right + popupWidth + 20 <
+              window.innerWidth
+            ) {
               posX = rect.right + 16;
               side = "left";
             } else {
@@ -173,7 +181,8 @@ export default function StickerBoard({
               x: posX,
               y: rect.top,
               side,
-              arrowTop: stickerCenterY - rect.top - 8,
+              arrowTop:
+                stickerCenterY - rect.top - 8,
             });
           }
         }}
@@ -194,19 +203,15 @@ export default function StickerBoard({
         <img
           src={sticker.image}
           style={{ width: size }}
-          className="drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
           draggable={false}
+          className="drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
         />
       </div>
     );
   }
 
-  /* ============================= */
-  /* RENDER */
-  /* ============================= */
-
   return (
-    <div className="relative w-full h-full max-w-[1600px] mx-auto">
+    <>
       <DndContext onDragEnd={handleDragEnd}>
         {stickers.map((sticker) => (
           <Draggable key={sticker.id} sticker={sticker} />
@@ -215,28 +220,17 @@ export default function StickerBoard({
 
       {popup && (
         <div
-          className="fixed z-[9999] animate-popupScale"
+          className="fixed z-[9999]"
           style={{ left: popup.x, top: popup.y }}
         >
           <div
             ref={popupRef}
-            className="relative bg-white text-black text-sm px-6 py-4 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-gray-200 max-w-[260px]"
+            className="relative bg-white text-black text-sm px-6 py-4 rounded-2xl shadow-xl max-w-[260px]"
           >
             {popup.text}
-
-            <div
-              className={`absolute w-4 h-4 bg-white rotate-45 border-gray-200
-                ${
-                  popup.side === "left"
-                    ? "-left-2 border-l border-b"
-                    : "-right-2 border-r border-t"
-                }
-              `}
-              style={{ top: popup.arrowTop }}
-            />
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
