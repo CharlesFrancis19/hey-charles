@@ -137,7 +137,7 @@ export const stickersData: StickerItem[] = [
     id: "friends",
     image: "/stickers/friends.png",
     rotate: -5,
-    size: 180,
+    size:270,
     mobileSize: 100,
     x: 58,
     y: 78,
