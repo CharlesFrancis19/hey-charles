@@ -57,9 +57,8 @@ export const stickersData: StickerItem[] = [
     rotate: 6,
     size: 170,
     mobileSize: 100,
-   
-     x: 73,
-    y: 57,
+    x: 77,
+    y: 55,
     description:
       "Mentoring — I genuinely enjoy guiding students in tech. Teaching reinforces my fundamentals and builds leadership, empathy, and communication skills.",
   },
@@ -139,7 +138,7 @@ export const stickersData: StickerItem[] = [
     rotate: -5,
     size:270,
     mobileSize: 100,
-    x: 58,
+    x: 54,
     y: 78,
     description:
       "Friends — My emotional balance during my Master's journey abroad. They keep me grounded, motivated, and remind me that success means nothing without shared memories.",
