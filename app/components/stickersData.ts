@@ -190,8 +190,8 @@ export const stickersData: StickerItem[] = [
     image: "/stickers/crocodile.png",
     rotate: 6,
     size: 150,
-    x:30,
-    y: 60,
+    x:22,
+    y: 66,
     mobileSize: 90,
     description:
       "Not just code — I love energy, creativity, music, gym discipline, and building things that make people say 'wow'.",
