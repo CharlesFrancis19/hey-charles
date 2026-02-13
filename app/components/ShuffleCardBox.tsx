@@ -21,7 +21,7 @@ export default function ShuffleCardBox({ cards }: { cards: CardData[] }) {
     setIndex((prev) => (prev === 0 ? cards.length - 1 : prev - 1));
 
   /* =========================
-     GESTURE LOGIC (FIXED)
+     GESTURE
   ========================= */
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -44,11 +44,8 @@ export default function ShuffleCardBox({ cards }: { cards: CardData[] }) {
     const threshold = 60;
 
     if (Math.abs(dy) > threshold) {
-      if (dy > 0) {
-        next(); // swipe down
-      } else {
-        prev(); // swipe up
-      }
+      if (dy > 0) next();
+      else prev();
     }
 
     isDragging.current = false;
@@ -57,12 +54,7 @@ export default function ShuffleCardBox({ cards }: { cards: CardData[] }) {
   };
 
   return (
-    <div
-      className="relative w-[90vw] max-w-[460px] h-[340px] perspective-1000 select-none"
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-    >
+    <div className="relative w-[92vw] max-w-[520px] h-[380px] perspective-1000 select-none">
       {cards.map((card, i) => {
         const position = (i - index + cards.length) % cards.length;
 
@@ -72,76 +64,108 @@ export default function ShuffleCardBox({ cards }: { cards: CardData[] }) {
             className="
               absolute inset-0 
               rounded-3xl 
-              p-8 
-              backdrop-blur-xl 
-              bg-white/5 
-              border border-white/10 
+              p-10
+              bg-black/60
+              backdrop-blur-2xl
+              border border-white/20
               transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)]
-              shadow-[0_40px_80px_rgba(0,0,0,0.8)]
+              shadow-[0_40px_100px_rgba(0,0,0,0.9)]
             "
             style={{
               transform: `
-                translateY(${position * 14}px)
-                scale(${1 - position * 0.06})
+                translateY(${position * 16}px)
+                scale(${1 - position * 0.05})
                 rotateX(${position * 3}deg)
               `,
               zIndex: cards.length - position,
               opacity: position > 3 ? 0 : 1,
             }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
           >
-            {/* Glow */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20 blur-xl -z-10" />
+            {/* Subtle glow */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20 blur-2xl -z-10" />
 
-            {/* Header */}
-            <div className="flex justify-between items-center text-white mb-6">
-              <span className="text-xs tracking-widest uppercase opacity-60">
-                {index + 1} / {cards.length}
-              </span>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={prev}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-blue-500 transition flex items-center justify-center"
-                >
-                  ↑
-                </button>
-                <button
-                  onClick={next}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-blue-500 transition flex items-center justify-center"
-                >
-                  ↓
-                </button>
-              </div>
+            {/* Counter */}
+            <div className="text-xs tracking-widest uppercase text-gray-300 mb-6">
+              {index + 1} / {cards.length}
             </div>
 
             {/* Title */}
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+            <h2 className="text-3xl font-bold text-white mb-5 leading-tight">
               {card.title}
             </h2>
 
             {/* Description */}
-            <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
+            <p className="text-gray-200 text-base leading-relaxed mb-10">
               {card.description}
             </p>
 
-            {/* Button */}
+            {/* Bottom Section */}
+            <div className="absolute bottom-6 right-6 flex items-center gap-3">
+              
+              {/* Previous Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prev();
+                }}
+                className="
+                  w-10 h-10 
+                  rounded-full 
+                  bg-white/10 
+                  border border-white/20
+                  text-white
+                  hover:bg-blue-500
+                  transition-all duration-300
+                  flex items-center justify-center
+                  shadow-md
+                "
+              >
+                ↑
+              </button>
+
+              {/* Next Button (Highlighted) */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  next();
+                }}
+                className="
+                  w-10 h-10 
+                  rounded-full 
+                  bg-blue-500
+                  text-white
+                  hover:bg-blue-400
+                  transition-all duration-300
+                  flex items-center justify-center
+                  shadow-[0_0_20px_rgba(59,130,246,0.8)]
+                "
+              >
+                ↓
+              </button>
+            </div>
+
+            {/* Action Button */}
             {card.buttonText && (
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // prevent swipe trigger
+                  e.stopPropagation();
                   if (card.link) {
                     window.open(card.link, "_blank");
                   }
                 }}
                 className="
-                  px-6 py-2 
-                  rounded-full 
+                  mt-6
+                  px-7 py-3
+                  rounded-full
                   bg-gradient-to-r from-blue-500 to-blue-600
                   hover:from-blue-400 hover:to-blue-500
-                  text-white font-medium
+                  text-white font-semibold
                   transition-all duration-300
                   shadow-[0_0_25px_rgba(59,130,246,0.6)]
-                  hover:shadow-[0_0_40px_rgba(59,130,246,1)]
+                  hover:shadow-[0_0_45px_rgba(59,130,246,1)]
                 "
               >
                 {card.buttonText}
@@ -152,7 +176,7 @@ export default function ShuffleCardBox({ cards }: { cards: CardData[] }) {
       })}
 
       {/* Bottom Glow */}
-      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-60 h-20 bg-blue-500/20 blur-3xl rounded-full" />
+      <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-72 h-24 bg-blue-500/30 blur-3xl rounded-full" />
     </div>
   );
 }
