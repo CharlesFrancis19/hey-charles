@@ -19,7 +19,7 @@ const cardsData = [
   },
   {
     id: "2",
-    title: "Full-Stack Systems Builder",
+    title: "Full-Stack Systems.",
     description:
       "I design and build scalable full-stack applications — from performant backend architectures and REST APIs to responsive frontend interfaces. Strong focus on authentication systems, database design, clean architecture, and production-ready deployments.",
   },
