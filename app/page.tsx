@@ -13,7 +13,7 @@ const LOFI_STREAM = "https://stream.zeno.fm/0r0xa792kwzuv";
 const cardsData = [
   {
     id: "1",
-    title: "Yo, I'm Aakaash.",
+    title: "Yo, I'm Aakaash Charles.",
     description:
       "Master’s student in Information Technology in New Zealand with a strong focus on backend engineering, scalable system design, and real-world production-ready software. I enjoy building systems that are reliable, secure, and performance-driven.",
   },
